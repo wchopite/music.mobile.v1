@@ -12,6 +12,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   // URL para llamadas a los servicios RESTful
   $rootScope.urlBackend = "http://music.back:8000/";
 
+  $rootScope.requestHeaders = {
+    "Content-Type": "application/json",
+    "Accept": "application/json"
+  };
+
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -40,38 +45,69 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     url: '/tab',
     abstract: true,
     templateUrl: 'templates/tabs.html'
-  })
+  }) 
 
   // Each tab has its own nav history stack:
 
-  .state('tab.dash', {
-    url: '/dash',
+  .state('tab.home', {
+    url: '/home',
     views: {
-      'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
-        controller: 'DashCtrl'
+      'tab-home': {
+        templateUrl: 'templates/tab-home.html'        
       }
     }
   })
 
+  .state('tab.genders', {
+    url: '/genders',
+    cache: false,
+    views: {
+      'tab-genders': {
+        templateUrl: 'templates/genders/list.html',
+        controller: 'GenderCtrl'
+      }
+    }
+  })
+
+  .state('tab.genders-new',{
+    url:'/genders/new',
+    views: {
+      'tab-genders': {
+        templateUrl: 'templates/genders/create.html',
+        controller: 'GenderCtrl'
+      }
+    }
+  })
+
+  .state('tab.genders-update',{
+    url:'/genders/:id',
+    views: {
+      'tab-genders': {
+        templateUrl: 'templates/genders/update.html',
+        controller: 'GenderCtrl'
+      }
+    }
+  })
+  
   .state('tab.chats', {
-      url: '/chats',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
-          controller: 'ChatsCtrl'
-        }
+    url: '/chats',
+    views: {
+      'tab-chats': {
+        templateUrl: 'templates/tab-chats.html',
+        controller: 'ChatsCtrl'
       }
-    })
-    .state('tab.chat-detail', {
-      url: '/chats/:chatId',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
-        }
+    }
+  })
+
+  .state('tab.chat-detail', {
+    url: '/chats/:chatId',
+    views: {
+      'tab-chats': {
+        templateUrl: 'templates/chat-detail.html',
+        controller: 'ChatDetailCtrl'
       }
-    })
+    }
+  })
 
   .state('tab.account', {
     url: '/account',
@@ -81,9 +117,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         controller: 'AccountCtrl'
       }
     }
-  });
+  })  
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
+  $urlRouterProvider.otherwise('/tab/home');
 
 });

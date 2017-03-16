@@ -1,0 +1,34 @@
+<ion-view view-title="Generos Musicales" ng-init="list()">
+  <ion-content>
+
+    <ion-spinner ng-show="!ready && !error" class="spinner-positive centered-spinner"></ion-spinner>
+    
+    <ion-refresher pulling-text="Refrescar..." on-refresh="list()"></ion-refresher>
+
+    <div ng-if="error" class="error item-icon-left"><i class="ion-close-circled"></i> {{message}}</div>
+    
+    <div class="row" ng-show="ready && !error">
+      <div class="col">
+        <a href="#/tab/genders/new" 
+        class="button button-clear icon-right ion-plus-circled button-balanced">
+            Nuevo Genero
+        </a>
+      </div>
+    </div>
+
+    <ion-list ng-show="ready && !error">
+
+      <ion-item ng-repeat="gender in genders" href="#/tab/genders/{{gender.id}}" class="item-icon-right">
+        <p>{{ gender.name }}</p>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+
+        <ion-option-button class="button-assertive" ng-click="destroy(gender.id)">
+          Delete
+        </ion-option-button>
+
+      </ion-item>
+
+    </ion-list>
+
+  </ion-content>
+</ion-view>
