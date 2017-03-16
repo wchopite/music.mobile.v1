@@ -29,10 +29,14 @@ angular.module('starter.controllers', [])
 
   $scope.show = function(id) {
 
+    $scope.noReady = true;
+    $scope.error = false;
+
     GenderFactory.show(id)
       .then(function(res) {
 
-        $scope.gender = res.data;        
+        $scope.noReady = false;
+        $scope.gender = res.data;
       })
       .catch(function(err) {
         
