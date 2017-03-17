@@ -53,11 +53,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     url: '/home',
     views: {
       'tab-home': {
-        templateUrl: 'templates/tab-home.html'        
+        templateUrl: 'templates/tab-home.html'
       }
     }
-  })
+  }) 
 
+  // ===== Generos =================//
   .state('tab.genders', {
     url: '/genders',
     cache: false,
@@ -81,6 +82,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
   .state('tab.genders-update',{
     url:'/genders/:id',
+    cache: false,
     views: {
       'tab-genders': {
         templateUrl: 'templates/genders/update.html',
@@ -88,7 +90,59 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }
     }
   })
+  // ===== Generos =================//
+
+  // ===== Artistas ================//
+  .state('tab.artists', {
+    url: '/artists',
+    cache: false,
+    views: {
+      'tab-artists': {
+        templateUrl: 'templates/artists/list.html',
+        controller: 'ArtistCtrl'
+      }
+    }
+  })
+
+  .state('tab.artists-new',{
+    url:'/artists/new',
+    views: {
+      'tab-artists': {
+        templateUrl: 'templates/artists/create.html',
+        controller: 'ArtistCtrl'
+      }
+    }
+  })
+
+  .state('tab.artists-update',{
+    url:'/artists/:id',
+    cache: false,
+    views: {
+      'tab-artists': {
+        templateUrl: 'templates/artists/update.html',
+        controller: 'ArtistCtrl'
+      }
+    }
+  })
+  // ===== Artistas ================//
   
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   .state('tab.chats', {
     url: '/chats',
     views: {

@@ -43,6 +43,49 @@ angular.module('starter.services', [])
   };
 })
 
+.factory('ArtistFactory', function($http, $rootScope) {
+
+  return {
+    list: function(){
+      return $http({
+        method: 'GET',
+        url: $rootScope.urlBackend+'api/v1/artists',
+        headers: $rootScope.requestHeaders
+      });
+    },
+    show: function(id) {
+      return $http({
+        method: 'GET',
+        url: $rootScope.urlBackend+'api/v1/artists/'+id,
+        headers: $rootScope.requestHeaders
+      });
+    },
+    create: function(artist) {      
+      return $http({
+        method: 'POST',
+        url: $rootScope.urlBackend+'api/v1/artists',
+        data: artist,
+        headers: $rootScope.requestHeaders
+      });
+    },
+    update: function(artist){
+      return $http({
+        method: 'PUT',
+        url: $rootScope.urlBackend+'api/v1/artists/'+artist.id,
+        data: artist,
+        headers: $rootScope.requestHeaders
+      });
+    },
+    destroy: function(id) {
+      return $http({
+        method: 'delete',
+        url: $rootScope.urlBackend+'api/v1/artists/'+id,        
+        headers: $rootScope.requestHeaders
+      });
+    }
+  };
+})
+
 .factory('Chats', function() {
   // Might use a resource here that returns a JSON array
 

@@ -1,4 +1,4 @@
-<ion-view view-title="Generos Musicales" ng-init="list()">
+<ion-view view-title="Artistas" ng-init="list()">
   <ion-content>
     
     <ion-spinner ng-show="!ready && !error" class="spinner-positive centered-spinner"></ion-spinner>
@@ -9,20 +9,20 @@
     
     <div class="row" ng-show="ready && !error">
       <div class="col">
-        <a href="#/tab/genders/new" 
+        <a href="#/tab/artists/new" 
         class="button button-clear icon-right ion-plus-circled button-balanced">
-            Nuevo Genero
+            Nuevo Artista
         </a>
       </div>
     </div>
 
     <ion-list ng-show="ready && !error">
 
-      <ion-item ng-repeat="gender in genders" href="#/tab/genders/{{gender.id}}" class="item-icon-right">
-        <p>{{ gender.name }}</p>
+      <ion-item ng-repeat="artist in artists" href="#/tab/artists/{{artist.id}}" class="item-icon-right">
+        <p>{{ artist.name }}</p>
         <i class="icon ion-chevron-right icon-accessory"></i>
 
-        <ion-option-button class="button-assertive" ng-click="destroy(gender.id)">
+        <ion-option-button class="button-assertive" ng-click="destroy(artist.id)">
           Delete
         </ion-option-button>
 
