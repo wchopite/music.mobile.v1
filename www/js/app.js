@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic', 'starter.controllers', 'angularMoment', 'starter.services'])
 
 .run(function($ionicPlatform, $rootScope) {
 
@@ -75,12 +75,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     views: {
       'tab-genders': {
         templateUrl: 'templates/genders/create.html',
-        controller: 'GenderCtrl'
+        controller: 'GenderCtrl' 
       }
     }
   })
 
-  .state('tab.genders-update',{
+  .state('tab.genders-update',{ 
     url:'/genders/:id',
     cache: false,
     views: {
@@ -126,8 +126,26 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   })
   // ===== Artistas ================//
   
-
+  // ===== Albums ==================//
+  .state('tab.albums', {
+    url: '/albums',
+    views: {
+      'tab-albums': {
+        templateUrl: 'templates/albums/list.html',
+        controller: 'AlbumCtrl'
+      }
+    }
+  })
   
+  .state('tab.albums-new',{
+    url:'/albums/new',
+    views: {
+      'tab-albums': {
+        templateUrl: 'templates/albums/create.html',
+        controller: 'AlbumCtrl'
+      }
+    }
+  })
 
 
 

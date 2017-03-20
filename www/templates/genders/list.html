@@ -7,14 +7,14 @@
 
     <div ng-if="error" class="error item-icon-left"><i class="ion-close-circled"></i> {{message}}</div>
     
-    <div class="row" ng-show="ready && !error">
-      <div class="col">
+    <!-- <div class="row" > -->
+      <div class="col" ng-if="ready && !error">
         <a href="#/tab/genders/new" 
         class="button button-clear icon-right ion-plus-circled button-balanced">
-            Nuevo Genero
+            Nuevo
         </a>
       </div>
-    </div>
+    <!-- </div> -->
 
     <ion-list ng-show="ready && !error">
 

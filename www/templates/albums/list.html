@@ -1,0 +1,30 @@
+<ion-view view-title="Albums" ng-init="list()">
+  <ion-content>
+    
+    <ion-spinner ng-show="!ready && !error" class="spinner-positive centered-spinner"></ion-spinner>   
+    
+    <ion-refresher pulling-text="Refrescar..." on-refresh="list()"></ion-refresher>
+
+    <div ng-if="error" class="error item-icon-left"><i class="ion-close-circled"></i> {{message}}</div>
+
+    <div class="row" ng-show="ready && !error">
+      <div class="col">
+        <a href="#/tab/albums/new" 
+        class="button button-clear icon-right ion-plus-circled button-balanced">
+            Nuevo Genero
+        </a>
+      </div>
+    </div>
+
+    <div class="list" ng-if="ready && !error">
+      <span class="item item-thumbnail-left" ng-repeat="album in albums">
+        <img ng-src="{{ urlBackend+album.path }}">
+        <h2 class="album-title">{{ album.name }}</h2>
+        <p>{{ album.artist.name }}</p>
+        <p>{{ album.year }}</p>
+        <p><span am-time-ago="album.updated_at"></span></p>
+      </span>
+    </div>
+
+  </ion-content>
+</ion-view>

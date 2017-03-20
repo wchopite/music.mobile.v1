@@ -3,9 +3,9 @@ angular.module('starter.services', [])
 .factory('GenderFactory', function($http, $rootScope) {
   
   return {
-    list: function() {
+    list: function() { 
       return $http({
-        method: 'GET',
+        method: 'get',
         url: $rootScope.urlBackend+'api/v1/genders',
         headers: $rootScope.requestHeaders
       });
@@ -17,7 +17,7 @@ angular.module('starter.services', [])
         headers: $rootScope.requestHeaders
       });
     },
-    create: function(gender) {      
+    create: function(gender) {
       return $http({
         method: 'POST',
         url: $rootScope.urlBackend+'api/v1/genders',
@@ -85,6 +85,22 @@ angular.module('starter.services', [])
     }
   };
 })
+
+.factory('AlbumFactory', function($http, $rootScope) {
+
+  return {
+    list: function(){
+      return $http({
+        method: 'GET',
+        url: $rootScope.urlBackend+'api/v1/albums',
+        headers: $rootScope.requestHeaders
+      });
+    }
+  };
+})
+
+
+
 
 .factory('Chats', function() {
   // Might use a resource here that returns a JSON array

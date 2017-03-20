@@ -1,4 +1,4 @@
-<ion-view view-title='Nuevo genero musical'>
+<ion-view view-title='Nuevo Album'>
   <ion-content>
     
     <form novalidate>
@@ -12,10 +12,24 @@
 
       <div class="row">
         <div class="col">
-          <div class="list list-inset">
+          <div class="list">
             <label class="item item-input item-stacked-label">
               <span class="input-label">Nombre</span>
-              <input type="text" placeholder="Rock" ng-model="gender.name" required ng-minlength="3" ng-maxlength="80">
+              <input type="text" placeholder="Licencia para ser libre" ng-model="album.name" required>
+            </label>
+            <label class="item item-input item-select">
+              <div class="input-label">Genero musical</div>
+              <select ng-init="getGenders()" ng-model="album.gender_id" 
+              ng-options="gender.id as gender.name for gender in genders"></select>
+            </label>
+            <label class="item item-input item-select">
+              <div class="input-label">Artista</div>
+              <select ng-init="getArtists()" ng-model="album.artist_id" 
+              ng-options="artist.id as artist.name for artist in artists"></select>
+            </label>            
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">A&ntilde;o</span>
+              <input type="number" placeholder="2011" ng-model="album.year" required>
             </label>
           </div>
         </div>
@@ -37,12 +51,12 @@
 
       <div class="row padding">
         <div class="col col-50 responsive-sm">
-          <a href="#/tab/genders" class="button button-block button-assertive">
+          <a href="#/tab/albums" class="button button-block button-assertive">
             Cancelar
           </a>
         </div>
         <div class="col col-50">
-          <button ng-disabled="!gender.name" type="submit" ng-click="create(gender)" class="button button-block button-balanced">
+          <button ng-disabled="false" type="submit" ng-click="create(album)" class="button button-block button-balanced">
             Enviar
           </button>
         </div>
