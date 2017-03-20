@@ -5,35 +5,21 @@
 
       <div class="row">
         <div class="col">
-          <ion-spinner ng-show="noReady && !error" class="spinner-positive centered-spinner">            
+          <ion-spinner ng-show="!noReady && !error" class="spinner-positive centered-spinner">            
           </ion-spinner>
         </div>
       </div>
 
-      <div class="row">
-        <div class="col">
-          <div class="list">
-            <label class="item item-input item-stacked-label">
-              <span class="input-label">Nombre</span>
-              <input type="text" placeholder="Licencia para ser libre" ng-model="album.name" required>
-            </label>
-            <label class="item item-input item-select">
-              <div class="input-label">Genero musical</div>
-              <select ng-init="getGenders()" ng-model="album.gender_id" 
-              ng-options="gender.id as gender.name for gender in genders"></select>
-            </label>
-            <label class="item item-input item-select">
-              <div class="input-label">Artista</div>
-              <select ng-init="getArtists()" ng-model="album.artist_id" 
-              ng-options="artist.id as artist.name for artist in artists"></select>
-            </label>            
-            <label class="item item-input item-stacked-label">
-              <span class="input-label">A&ntilde;o</span>
-              <input type="number" placeholder="2011" ng-model="album.year" required>
-            </label>
-          </div>
-        </div>
-      </div>
+       <ion-pane>
+         <ion-content>     
+          <img ng-src="{{pathForImage(image)}}" style="width: 100%; height: 100%;">
+
+        <button class="button icon-left ion-camera" ng-click="loadImage()">Take Photo</button>
+        <button class="button icon-left ion-upload" ng-click="uploadImage()" ng-disabled="image === null">Upload</button>
+      
+    </ion-content>
+    
+  </ion-pane>
 
       <!-- successful -->
       <div class="row" ng-show="success">
