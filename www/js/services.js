@@ -51,9 +51,9 @@ angular.module('starter.services', [])
         method: 'GET',
         url: $rootScope.urlBackend+'api/v1/artists',
         headers: $rootScope.requestHeaders
-      });
+      }); 
     },
-    show: function(id) {
+    show: function(id) {      
       return $http({
         method: 'GET',
         url: $rootScope.urlBackend+'api/v1/artists/'+id,

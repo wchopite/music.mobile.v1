@@ -167,6 +167,7 @@ angular.module('starter.controllers', [])
 
         $scope.noReady = false;
         $scope.artist = res.data;
+        console.log($scope.artist);
       })
       .catch(function(err) {
         
@@ -206,7 +207,7 @@ angular.module('starter.controllers', [])
     ArtistFactory.update(artist)
       .then(function(res) {
 
-        $scope.noReady = false;        
+        $scope.noReady = false;
         $scope.success= true;
         $timeout(function() {
           $location.path('/tab/artists');
