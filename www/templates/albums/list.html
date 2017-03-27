@@ -7,24 +7,33 @@
 
     <div ng-if="error" class="error item-icon-left"><i class="ion-close-circled"></i> {{message}}</div>
 
-    <div class="row" ng-show="ready && !error">
+    <div class="row">
       <div class="col">
         <a href="#/tab/albums/new" 
         class="button button-clear icon-right ion-plus-circled button-balanced">
-            Nuevo Genero
+            Nuevo
         </a>
       </div>
     </div>
 
-    <div class="list" ng-if="ready && !error">
-      <span class="item item-thumbnail-left" ng-repeat="album in albums">
-        <img ng-src="{{ urlBackend+album.path }}">
+    <ion-list ng-show="ready && !error">
+
+      <ion-item ng-repeat="album in albums" href="#/tab/albums/{{album.id}}" 
+      class="item-icon-right item-thumbnail-left">
+        <img ng-src="{{ urlBackend+album.path }}">        
         <h2 class="album-title">{{ album.name }}</h2>
-        <p>{{ album.artist.name }}</p>
-        <p>{{ album.year }}</p>
+        <p>{{ album.artist.name }} - {{ album.year }}</p>
+        <p>{{ album.gender.name }}</p>
         <p><span am-time-ago="album.updated_at"></span></p>
-      </span>
-    </div>
+        
+        <i class="icon ion-chevron-right icon-accessory"></i>
+
+        <ion-option-button class="button-assertive" ng-click="destroy(album.id)">
+          Eliminar
+        </ion-option-button>
+      </ion-item>
+
+    </ion-list>
 
   </ion-content>
 </ion-view>

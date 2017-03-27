@@ -79,7 +79,7 @@ angular.module('starter.services', [])
     destroy: function(id) {
       return $http({
         method: 'delete',
-        url: $rootScope.urlBackend+'api/v1/artists/'+id,        
+        url: $rootScope.urlBackend+'api/v1/artists/'+id,
         headers: $rootScope.requestHeaders
       });
     }
@@ -95,10 +95,87 @@ angular.module('starter.services', [])
         url: $rootScope.urlBackend+'api/v1/albums',
         headers: $rootScope.requestHeaders
       });
+    },
+    show: function(id) {
+      return $http({
+        method: 'GET',
+        url: $rootScope.urlBackend+'api/v1/albums/'+id,
+        headers: $rootScope.requestHeaders
+      });
+    },
+    destroy: function(id) {
+      return $http({
+        method: 'delete',
+        url: $rootScope.urlBackend+'api/v1/albums/'+id,
+        headers: $rootScope.requestHeaders
+      });
     }
   };
 })
 
+.factory('AuthenticationFactory', function($http,$rootScope){
+
+  return {
+    login: function(user){
+      return $http({
+        method: 'POST',
+        url: $rootScope.urlBackend+'api/v1/login',
+        data: user,
+        headers: $rootScope.requestHeaders
+      });
+    },
+    logout: function(id) {
+      return $http({
+        method: 'get',
+        url: $rootScope.urlBackend+'api/v1/logout',
+        headers: $rootScope.requestHeaders
+      });
+    }
+  };
+})
+
+.factory('UserFactory', function($http, $rootScope) {
+  
+  return {
+    list: function() { 
+      return $http({
+        method: 'get',
+        url: $rootScope.urlBackend+'api/v1/users',
+        headers: $rootScope.requestHeaders
+      });
+    },
+    show: function(id) {
+      return $http({
+        method: 'GET',
+        url: $rootScope.urlBackend+'api/v1/users/'+id,
+        headers: $rootScope.requestHeaders
+      });
+    },
+    create: function(user) {
+      return $http({
+        method: 'POST',
+        url: $rootScope.urlBackend+'api/v1/users',
+        data: user,
+        headers: $rootScope.requestHeaders
+      });
+    },
+    update: function(user){
+      return $http({
+        method: 'PUT',
+        url: $rootScope.urlBackend+'api/v1/users/'+user.id,
+        data: user,
+        headers: $rootScope.requestHeaders
+      });
+    },
+    destroy: function(id) {
+      return $http({
+        method: 'delete',
+        url: $rootScope.urlBackend+'api/v1/users/'+id,        
+        headers: $rootScope.requestHeaders
+      });
+    }
+  };
+})
 
 
 

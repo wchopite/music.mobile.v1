@@ -5,19 +5,37 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'angularMoment', 'starter.services'])
+angular.module('starter', ['ionic', 'starter.controllers', 
+  'ngCordova', 'angularMoment', 'starter.services','ngStorage'])
 
-.run(function($ionicPlatform, $rootScope) {
+.run(function($ionicPlatform, $rootScope,$location, $localStorage, $http) {
+
+  // keep user logged in after page refresh
+  if($localStorage.token) {
+    $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.token;
+  }
+
+  // redirect to login page if not logged in and trying to access a restricted page
+  $rootScope.$on('$locationChangeStart', function (event, next, current) {
+    var publicPages = ['/login'];
+    var restrictedPage = publicPages.indexOf($location.path()) === -1;
+    if(restrictedPage && !$localStorage.token) {
+      $location.path('/login');
+    }
+  });
 
   // URL para llamadas a los servicios RESTful
-  $rootScope.urlBackend = "http://music.back:8000/";
+  $rootScope.urlBackend = "http://music.wchopite.com.ve/";
 
   $rootScope.requestHeaders = {
     "Content-Type": "application/json",
     "Accept": "application/json"
   };
 
+  $rootScope.isAuthenticated = false;
+
   $ionicPlatform.ready(function() {
+
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
@@ -56,7 +74,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'angularMoment', 'sta
         templateUrl: 'templates/tab-home.html'
       }
     }
-  }) 
+  })
+
+  // ======= Login =================//
+  .state('login', {
+    url: '/login',
+    cache: false,
+    templateUrl: 'templates/login.html',
+    controller: 'AuthenticationCtrl',
+  })
+  // ======= Login =================//
 
   // ===== Generos =================//
   .state('tab.genders', {
@@ -105,7 +132,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'angularMoment', 'sta
   })
 
   .state('tab.artists-new',{
-    url:'/artists/new',
+    url:'/artists/new',    
     views: {
       'tab-artists': {
         templateUrl: 'templates/artists/create.html',
@@ -129,6 +156,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'angularMoment', 'sta
   // ===== Albums ==================//
   .state('tab.albums', {
     url: '/albums',
+    cache: false,
     views: {
       'tab-albums': {
         templateUrl: 'templates/albums/list.html',
@@ -139,6 +167,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'angularMoment', 'sta
   
   .state('tab.albums-new',{
     url:'/albums/new',
+    cache: false,
     views: {
       'tab-albums': {
         templateUrl: 'templates/albums/create.html',
@@ -147,8 +176,51 @@ angular.module('starter', ['ionic', 'starter.controllers', 'angularMoment', 'sta
     }
   })
 
+  .state('tab.albums-update',{
+    url:'/albums/:id',
+    cache: false,
+    views: {
+      'tab-albums': {
+        templateUrl: 'templates/albums/update.html',
+        controller: 'AlbumCtrl'
+      }
+    }
+  })
+  // ===== Albums ==================//
 
+  // ===== Users =================//
+  .state('tab.users', {
+    url: '/users',
+    cache: false,
+    views: {
+      'tab-users': {
+        templateUrl: 'templates/users/list.html',
+        controller: 'UserCtrl'
+      }
+    }
+  })
 
+  .state('tab.users-new',{
+    url:'/users/new',
+    views: {
+      'tab-users': {
+        templateUrl: 'templates/users/create.html',
+        controller: 'UserCtrl' 
+      }
+    }
+  })
+
+  .state('tab.users-update',{ 
+    url:'/users/:id',
+    cache: false,
+    views: {
+      'tab-users': {
+        templateUrl: 'templates/users/update.html',
+        controller: 'UserCtrl'
+      }
+    }
+  })
+  // ===== Generos =================//
 
 
 
