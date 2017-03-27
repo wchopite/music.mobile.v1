@@ -1,4 +1,4 @@
-<ion-view view-title='Nuevo Album Musical'>
+<ion-view ng-init="show(id)" view-title='Actualizar Album Musical'>
   <ion-content>
     
     <form novalidate>
@@ -18,8 +18,9 @@
               <div class="input-label">
                 Artista
               </div>
-              <select ng-init="getArtists()" ng-model="album.artist_id" ng-options="artist.id as artist.name for artist in artists">
-              </select>
+              <select ng-model="album.artist_id" ng-init="getArtists()" 
+                ng-options="artist.name for artist in artists track by artist.id"></select>
+              
             </label>
 
             <label class="item item-input item-stacked-label">
