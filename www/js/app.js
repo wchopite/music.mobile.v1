@@ -6,34 +6,32 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 
-  'ngCordova', 'angularMoment', 'starter.services','ngStorage'])
+  'angularMoment', 'starter.services', 'ngCordova', 'ngStorage'])
 
 .run(function($ionicPlatform, $rootScope,$location, $localStorage, $http) {
 
-  // keep user logged in after page refresh
+  // Almacena el header en el header comun a cada envio al backend
   if($localStorage.token) {
     $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.token;
   }
 
-  // redirect to login page if not logged in and trying to access a restricted page
+  // redirecciona al login si no esta logueado o intenta acceder a una pagina no permitida
   $rootScope.$on('$locationChangeStart', function (event, next, current) {
     var publicPages = ['/login'];
-    var restrictedPage = publicPages.indexOf($location.path()) === -1;
+    var restrictedPage = (publicPages.indexOf($location.path()) === -1);
     if(restrictedPage && !$localStorage.token) {
       $location.path('/login');
     }
   });
 
-  // URL para llamadas a los servicios RESTful
+  // URL servicios RESTful
   $rootScope.urlBackend = "http://music.wchopite.com.ve/";
 
   $rootScope.requestHeaders = {
     "Content-Type": "application/json",
     "Accept": "application/json"
   };
-
-  $rootScope.isAuthenticated = false;
-
+  
   $ionicPlatform.ready(function() {
 
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -83,6 +81,12 @@ angular.module('starter', ['ionic', 'starter.controllers',
     templateUrl: 'templates/login.html',
     controller: 'AuthenticationCtrl',
   })
+
+  .state('logout', {
+    url: '/logout',
+    cache: false,
+    controller: 'LogoutCtrl',
+  })
   // ======= Login =================//
 
   // ===== Generos =================//
@@ -119,6 +123,7 @@ angular.module('starter', ['ionic', 'starter.controllers',
   })
   // ===== Generos =================//
 
+
   // ===== Artistas ================//
   .state('tab.artists', {
     url: '/artists',
@@ -153,9 +158,11 @@ angular.module('starter', ['ionic', 'starter.controllers',
   })
   // ===== Artistas ================//
   
+
+
   // ===== Albums ==================//
   .state('tab.albums', {
-    url: '/albums',
+    url: '/albums', 
     cache: false,
     views: {
       'tab-albums': {
@@ -187,6 +194,8 @@ angular.module('starter', ['ionic', 'starter.controllers',
     }
   })
   // ===== Albums ==================//
+
+
 
   // ===== Users =================//
   .state('tab.users', {
@@ -220,50 +229,8 @@ angular.module('starter', ['ionic', 'starter.controllers',
       }
     }
   })
-  // ===== Generos =================//
-
-
-
-
-
-
-
-
-
-
-
-
-  .state('tab.chats', {
-    url: '/chats',
-    views: {
-      'tab-chats': {
-        templateUrl: 'templates/tab-chats.html',
-        controller: 'ChatsCtrl'
-      }
-    }
-  })
-
-  .state('tab.chat-detail', {
-    url: '/chats/:chatId',
-    views: {
-      'tab-chats': {
-        templateUrl: 'templates/chat-detail.html',
-        controller: 'ChatDetailCtrl'
-      }
-    }
-  })
-
-  .state('tab.account', {
-    url: '/account',
-    views: {
-      'tab-account': {
-        templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
-      }
-    }
-  })  
+  // ===== Generos =================// 
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/home');
-
 });

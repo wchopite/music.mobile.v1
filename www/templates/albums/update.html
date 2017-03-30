@@ -1,5 +1,5 @@
-<ion-view ng-init="show(id)" view-title='Actualizar Album Musical'>
-  <ion-content>
+<ion-view ng-init="show(id); getArtists(); getGenders();" view-title='Actualizar Album'>
+  <ion-content> 
     
     <form novalidate>
 
@@ -10,17 +10,16 @@
         </div>
       </div>
 
-      <div class="row">
+      <div class="row" ng-if="!noReady && !error">
         <div class="col">
           <div class="list card">
 
             <label class="item item-input item-select">
               <div class="input-label">
                 Artista
-              </div>
-              <select ng-model="album.artist_id" ng-init="getArtists()" 
-                ng-options="artist.name for artist in artists track by artist.id"></select>
-              
+              </div>              
+              <select ng-model="album.artist_id" ng-options="artist.id as artist.name for artist in artists">
+              </select>              
             </label>
 
             <label class="item item-input item-stacked-label">
@@ -37,7 +36,7 @@
               <div class="input-label">
                 Genero musical
               </div>
-              <select ng-init="getGenders()" ng-model="album.gender_id" ng-options="gender.id as gender.name for gender in genders">
+              <select ng-model="album.gender_id" ng-options="gender.id as gender.name for gender in genders">
               </select>
             </label>
 
@@ -46,10 +45,20 @@
               <textarea rows="6" ng-model="album.description"></textarea>
             </label>
             
-            <button class="item item-icon-left royal" ng-click="loadImage()">
-              <i class="icon ion-camera"></i>
-              Agregar imagen
-            </button>
+            <div class="row">              
+              <div class="col col-50">
+                <button class="item item-icon-left royal" ng-click="showAlert('Imagen actual','{{path}}')">
+                  <i class="icon ion-image"></i>
+                  Actual
+                </button>
+              </div>
+              <div class="col col-50">
+                <button class="item item-icon-left royal" ng-click="loadImage()">
+                  <i class="icon ion-camera"></i>
+                  Nueva
+                </button>
+              </div>
+            </div>
 
             <div class="item item-image" ng-if="image != null">
               <img ng-src="{{pathForImage(image)}}" />
@@ -58,28 +67,14 @@
         </div>
       </div>
 
-      <!-- successful -->
-      <div class="row" ng-show="success">
-        <div class="col">
-          <div class="success item-icon-left"><i class="ion-ios-checkmark"></i> Registro almacenado satisfactoriamente</div>
-        </div>
-      </div>
-
-      <!-- error -->
-      <div class="row" ng-show="!noReady && error">
-        <div class="col">
-          <div class="error item-icon-left"><i class="ion-close-circled"></i> {{status}}<br/>{{message}}</div>
-        </div>
-      </div>
-
-      <div class="row padding">
+      <div class="row padding" ng-if="!noReady && !error">
         <div class="col col-50 responsive-sm">
           <a href="#/tab/albums" class="button button-block button-assertive">
             Cancelar
           </a>
         </div>
         <div class="col col-50">
-          <button ng-disabled="false" type="submit" ng-click="create(album)" class="button button-block button-balanced">
+          <button ng-disabled="false" type="submit" ng-click="update(album)" class="button button-block button-balanced">
             Enviar
           </button>
         </div>

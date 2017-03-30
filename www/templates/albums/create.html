@@ -17,8 +17,9 @@
             <label class="item item-input item-select">
               <div class="input-label">
                 Artista
-              </div>
-              <select ng-init="getArtists()" ng-model="album.artist_id" ng-options="artist.id as artist.name for artist in artists">
+              </div>              
+              <select ng-init="getArtists()" ng-model="album.artist_id" 
+              ng-options="artist.id as artist.name for artist in artists">
               </select>
             </label>
 
@@ -56,21 +57,7 @@
           </div>          
         </div>
       </div>
-
-      <!-- successful -->
-      <div class="row" ng-show="success">
-        <div class="col">
-          <div class="success item-icon-left"><i class="ion-ios-checkmark"></i> Registro almacenado satisfactoriamente</div>
-        </div>
-      </div>
-
-      <!-- error -->
-      <div class="row" ng-show="!noReady && error">
-        <div class="col">
-          <div class="error item-icon-left"><i class="ion-close-circled"></i> {{status}}<br/>{{message}}</div>
-        </div>
-      </div>
-
+      
       <div class="row padding">
         <div class="col col-50 responsive-sm">
           <a href="#/tab/albums" class="button button-block button-assertive">

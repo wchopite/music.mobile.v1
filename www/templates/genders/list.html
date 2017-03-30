@@ -1,4 +1,13 @@
 <ion-view view-title="Generos Musicales" ng-init="list()">
+
+  <ion-nav-buttons side="primary">
+    <a href="#/tab/genders/new" class="button icon-right ion-plus-circled"></a>      
+  </ion-nav-buttons>
+
+  <ion-nav-buttons side="left">
+    <a href="#/logout" class="button icon-right ion-log-out"></a>
+  </ion-nav-buttons>
+
   <ion-content>
     
     <ion-spinner ng-show="!ready && !error" class="spinner-positive centered-spinner"></ion-spinner>
@@ -7,15 +16,6 @@
 
     <div ng-if="error" class="error item-icon-left"><i class="ion-close-circled"></i> {{message}}</div>
     
-    <!-- <div class="row" > -->
-      <div class="col" ng-if="ready && !error">
-        <a href="#/tab/genders/new" 
-        class="button button-clear icon-right ion-plus-circled button-balanced">
-            Nuevo
-        </a>
-      </div>
-    <!-- </div> -->
-
     <ion-list ng-show="ready && !error">
 
       <ion-item ng-repeat="gender in genders" href="#/tab/genders/{{gender.id}}" class="item-icon-right">

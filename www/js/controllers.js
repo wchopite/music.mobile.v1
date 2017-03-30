@@ -21,7 +21,6 @@ angular.module('starter.controllers', [])
           $scope.error = true;
           $scope.ready = true;
           $scope.message = "Status "+err.status+" - "+err.data;
-          console.error('Error', err.status, err.data);
         })
         .finally(function() {
           
@@ -157,7 +156,7 @@ angular.module('starter.controllers', [])
       });
   };
 
-  $scope.show = function(id) { 
+  $scope.show = function(id) {
 
     $scope.noReady = true;
     $scope.error = false;
@@ -167,7 +166,6 @@ angular.module('starter.controllers', [])
 
         $scope.noReady = false;
         $scope.artist = res.data;
-        console.log($scope.artist);
       })
       .catch(function(err) {
         
@@ -256,7 +254,6 @@ angular.module('starter.controllers', [])
       }
     });
   };
-
 })
 
 .controller('AlbumCtrl', function($scope,GenderFactory, ArtistFactory,AlbumFactory,
@@ -279,6 +276,7 @@ angular.module('starter.controllers', [])
       $scope.error = false;
       $scope.albums = res.data;
       $scope.ready = true;
+      $scope.random = Math.random();
     },
     function(err){
       $scope.error = true;
@@ -289,7 +287,8 @@ angular.module('starter.controllers', [])
     });
   };
 
-  $scope.show = function(id) { 
+  // Consultar album
+  $scope.show = function(id) {
 
     $scope.noReady = true;
     $scope.error = false;
@@ -297,12 +296,16 @@ angular.module('starter.controllers', [])
     AlbumFactory.show(id)
       .then(function(res) {
 
+        var random = Math.random();
+
         $scope.noReady = false;
-        res.data.year = parseInt(res.data.year);        
+        res.data.year = parseInt(res.data.year);
+        res.data.artist_id = parseInt(res.data.artist_id);
+        res.data.gender_id = parseInt(res.data.gender_id);
         $scope.album = res.data;
+        $scope.path = "<img src="+$rootScope.urlBackend+$scope.album.path+"?r="+random+"/>";
       })
-      .catch(function(err) {
-        
+      .catch(function(err) {        
         console.error('Error', err.status, err.data);
       });
   };
@@ -346,6 +349,7 @@ angular.module('starter.controllers', [])
     });
   };
 
+  // Lista de generos musicales
   $scope.getGenders = function() {
 
     GenderFactory.list()
@@ -363,6 +367,7 @@ angular.module('starter.controllers', [])
       });
   };
 
+  // Lista de "artistas"
   $scope.getArtists = function() {
 
     ArtistFactory.list()
@@ -421,29 +426,50 @@ angular.module('starter.controllers', [])
       })
   };
 
+  // Actualizar album
+  $scope.update = function(album) {
 
+    $scope.noReady = true;
+    $scope.error = false;
 
+    var url = $rootScope.urlBackend+'api/v1/albums/'+album.id;
+ 
+    // File for Upload
+    var targetPath = $scope.pathForImage($scope.image);
+  
+    // File name only
+    var filename = $scope.image;
+  
+    var options = {
+      fileKey: "image",
+      fileName: filename,
+      chunkedMode: false,
+      mimeType: "multipart/form-data",
+      params : {
+        '_method': 'put',
+        'artist_id': album.artist_id,
+        'name': album.name,
+        'year': album.year,
+        'gender_id': album.gender_id,
+        'description': album.description,
+        'image': filename,
+        'user_id': 1
+      }
+    };    
+    
+    $cordovaFileTransfer.upload(url, targetPath, options)
+      .then(function(result) {
+        
+        $scope.showAlert("Success", "Registro actualizado satisfactoriamente");
+        $location.path('/tab/albums');
+      },
+      function(err){
+        $scope.showAlert('Error', JSON.stringify(err));
+      })
+    ;      
+  };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  // Funciones de Cordova
 
   // Muestra una ventana $ionicPopup alert con el titulo y mensaje indicado
   $scope.showAlert = function(title, msg) {
@@ -576,28 +602,7 @@ angular.module('starter.controllers', [])
     function(err){
       $scope.showAlert('Error', err);
     })
-  };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
+  };  
 })
 
 .controller('UserCtrl',
@@ -733,12 +738,6 @@ angular.module('starter.controllers', [])
 
 .controller('AuthenticationCtrl', function($scope,$rootScope,$http,$location,AuthenticationFactory,$localStorage){
 
-  $scope.logout = function() {
-    delete $localStorage.token;
-    $http.defaults.headers.common.Authorization = '';
-    $location.path('#/login');
-  }
-
   $scope.login = function(user) {
 
     AuthenticationFactory.login(user)
@@ -758,48 +757,12 @@ angular.module('starter.controllers', [])
         
       });
   };
-
 })
 
+.controller('LogoutCtrl',function($scope,$location, $localStorage,$http){
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.controller('ChatsCtrl', function($scope, Chats) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
-
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  };
-})
-
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
-})
-
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
+  delete $localStorage.token;
+  $http.defaults.headers.common.Authorization = '';
+  $location.path('#/login');
 });
+;

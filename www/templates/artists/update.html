@@ -24,20 +24,6 @@
         </div>
       </div>
 
-      <!-- successful -->
-      <div class="row" ng-show="success">
-        <div class="col">
-          <div class="success item-icon-left"><i class="ion-ios-checkmark"></i> Registro actualizado satisfactoriamente</div>
-        </div>
-      </div>
-
-      <!-- error -->
-      <div class="row" ng-show="!noReady && error">
-        <div class="col">
-          <div class="error item-icon-left"><i class="ion-close-circled"></i> {{status}}<br/>{{message}}</div>
-        </div>
-      </div>
-
       <div class="row padding" ng-if="!noReady && !error">
         <div class="col col-50 responsive-sm">
           <a href="#/tab/artists" class="button button-block button-assertive">
