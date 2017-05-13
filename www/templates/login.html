@@ -1,23 +1,22 @@
-<br/><br/>
+<ion-view view-title="Iniciar sesion">
+  <ion-content>
+    <form novalidate>
 
-<h2>Iniciar sesi&oacute;n</h2>
+      <div class="list list-inset">
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Email</span>
+          <input type="email" ng-model="user.email" required>
+        </label>
 
-<form novalidate>
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Password</span>
+          <input type="password" ng-model="user.password" required>
+        </label>
 
-  <div class="list list-inset">
-    <label class="item item-input item-stacked-label">
-      <span class="input-label">Email</span>
-      <input type="email" ng-model="user.email" required>
-    </label>
-
-    <label class="item item-input item-stacked-label">
-      <span class="input-label">Password</span>
-      <input type="password" ng-model="user.password" required>
-    </label>
-  </div>
-
-  <button type="submit" ng-click="login(user)" class="button button-balanced">
-    Enviar
-  </button>
-
-</form>
+        <button type="submit" ng-click="login(user)" class="button button-positive button-block">
+          Enviar
+        </button>
+      </div>
+    </form>
+  </ion-content>
+</ion-view>

@@ -266,7 +266,7 @@ angular.module('starter.controllers', [])
   $scope.image = null;  // imagen del album
 
   $scope.id = $stateParams.id;
-
+ 
   // Listado de albums
   $scope.list = function(){
 
@@ -753,8 +753,7 @@ angular.module('starter.controllers', [])
       })
       .catch(function(err) {
 
-        $scope.message = "Status "+err.status+" - "+err.data;
-        
+        $scope.message = "Status "+err.status+" - "+err.data;        
       });
   };
 })
