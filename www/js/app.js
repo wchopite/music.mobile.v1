@@ -77,8 +77,9 @@ angular.module('starter', ['ionic', 'starter.controllers',
   // ======= Login =================//
   .state('login', {
     url: '/login',
+    cache: false,
     templateUrl: 'templates/login.html',
-    controller: 'AuthenticationCtrl',        
+    controller: 'AuthenticationCtrl',
   })
 
   .state('logout', { 
